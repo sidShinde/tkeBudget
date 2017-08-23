@@ -128,6 +128,9 @@ protected:
         //- Fields to load
         wordHashSet fieldSet_;
 
+        // Reynolds number
+        scalar Re;
+
     // Protected Member Functions
 
         //- Process the tke field

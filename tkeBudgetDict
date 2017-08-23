@@ -14,21 +14,31 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-functions
-{
-    turbulenceFields1
-    {
-        type            turbulenceFields;
-        libs ("libfieldFunctionObjects.so");
-        enabled         true;
-        writeControl   timeStep;
-        writeInterval  1;
 
-        fields
-        (
-            R
-        );
-    }
+tkeBudgetDict
+{
+  type            tkeBudget;
+  libs ("libTkeBudget.so");
+  enabled         true;
+  
+  Re              6675;
+
+  //writeControl   timeStep;
+  //writeInterval  1;
+
+  timeStart        0.6;
+  timeEnd          2.0;
+  writeControl    writeTime;
+  
+  fields
+    (
+     Ck    // convection
+     Pk    // production
+     Tk    // turbulence transport
+     Dk    // viscous diffusion
+     Epik  // viscous dissipation
+     Pik   // velocity-gradient transport
+     );
 }
 
 // ************************************************************************* //

@@ -115,6 +115,16 @@ bool Foam::functionObjects::tkeBudget::read(const dictionary& dict)
         Info<< "no fields requested to be stored" << nl << endl;
     }
 
+    if (dict.found("Re"))
+      {
+	Re = readScalar(dict.lookup("Re"));
+	Re = 1/Re;
+      }
+    else
+      {
+	Info << "Reynolds number not defined in tkeBudgetDict" << nl << endl;
+      }
+
     return true;
 }
 
