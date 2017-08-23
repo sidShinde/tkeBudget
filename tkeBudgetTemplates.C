@@ -154,14 +154,14 @@ Foam::functionObjects::tkeBudget::Tk() const
   // fluctutation field
   const volVectorField UPrime = U - UMean;
 
+  // inner product of UPrime and UPrime
+  const volScalarField ipUPrime( UPrime & UPrime );
+
   // outer product of fluctuation field
-  const volTensorField opUPrime( UPrime * UPrime );
+  const volVectorField opUPrime( ipUPrime * UPrime );
 
-  // inner product of opUPrime and UPrime
-  const volVectorField ipUPrime( opUPrime & UPrime );
-
-  // divergence of ipUPrime
-  const volScalarField divIpUPrime( fvc::div(ipUPrime) );
+  // divergence of opUPrime
+  const volScalarField divOpUPrime( fvc::div(opUPrime) );
 
   return tmp<volScalarField>
   (
@@ -170,11 +170,11 @@ Foam::functionObjects::tkeBudget::Tk() const
           IOobject
 	  (
 	      "Tk",
-	      divIpUPrime.mesh().time().timeName(),
-	      divIpUPrime.mesh()
+	      divOpUPrime.mesh().time().timeName(),
+	      divOpUPrime.mesh()
 	   ),
-	  (-0.5)*divIpUPrime,
-	  divIpUPrime.boundaryField().types()
+	  (-0.5)*divOpUPrime,
+	  divOpUPrime.boundaryField().types()
        )
    );
 
