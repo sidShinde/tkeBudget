@@ -118,7 +118,6 @@ bool Foam::functionObjects::tkeBudget::read(const dictionary& dict)
     if (dict.found("Re"))
       {
 	Re = readScalar(dict.lookup("Re"));
-	Re = 1/Re;
       }
     else
       {

@@ -203,7 +203,7 @@ Foam::functionObjects::tkeBudget::Dk() const
 	      lapUP2M.mesh().time().timeName(),
 	      lapUP2M.mesh()
 	   ),
-	  (Re)*(0.5)*lapUP2M,
+	  (1/Re)*(0.5)*lapUP2M,
 	  lapUP2M.boundaryField().types()
        )
    );
@@ -236,7 +236,7 @@ Foam::functionObjects::tkeBudget::Epik() const
 	      ipGradUPrime.mesh().time().timeName(),
 	      ipGradUPrime.mesh()
 	   ),
-	  (-Re)*ipGradUPrime,
+	  (-1/Re)*ipGradUPrime,
 	  ipGradUPrime.boundaryField().types()
        )
    );
