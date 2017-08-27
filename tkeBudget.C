@@ -130,49 +130,56 @@ bool Foam::functionObjects::tkeBudget::read(const dictionary& dict)
 
 bool Foam::functionObjects::tkeBudget::execute()
 {
-  forAllConstIter(wordHashSet, fieldSet_, iter)
+  if (( obr_.foundObject<volVectorField>("UMean") ) && 
+      ( obr_.foundObject<volSymmTensorField>("UPrime2Mean") ))
     {
-      const word& f = iter.key();
-      switch (incompressibleFieldNames_[f])
+      forAllConstIter(wordHashSet, fieldSet_, iter)
 	{
-
-	case ifCk:
-	  {
-	    processField<scalar>(f, Ck());
-	    break;
-	  }
-	case ifPk:
-	  {
-	    processField<scalar>(f, Pk());
-	    break;
-	  }
-	case ifTk:
-	  {
-	    processField<scalar>(f, Dk());
-	    break;
-	  }
-	case ifDk:
-	  {
-	    processField<scalar>(f, Dk());
-	    break;
-	  }
-	case ifEpik:
-	  {
-	    processField<scalar>(f, Epik());
-	    break;
-	  }
-	case ifPik:
-	  {
-	    processField<scalar>(f, Pik());
-	    break;
-	  }
-	default:
-	  {
-	    FatalErrorInFunction
-	      << "Invalid field selection" << abort(FatalError);
-	  }
-
-	}
+	  const word& f = iter.key();
+	  switch (incompressibleFieldNames_[f])
+	    {
+	    
+	    case ifCk:
+	      {
+		processField<scalar>(f, Ck());
+		break;
+	      }
+	    case ifPk:
+	      {
+		processField<scalar>(f, Pk());
+		break;
+	      }
+	    case ifTk:
+	      {
+		processField<scalar>(f, Dk());
+		break;
+	      }
+	    case ifDk:
+	      {
+		processField<scalar>(f, Dk());
+		break;
+	      }
+	    case ifEpik:
+	      {
+		processField<scalar>(f, Epik());
+		break;
+	      }
+	    case ifPik:
+	      {
+		processField<scalar>(f, Pik());
+		break;
+	      }
+	    default:
+	      {
+		FatalErrorInFunction
+		  << "Invalid field selection" << abort(FatalError);
+	      }
+	    } // end of switch
+	} // end of for
+    } // end of if
+  else
+    { 
+      Info << "executing the else statement" << endl;
     }
 	
   return true;
