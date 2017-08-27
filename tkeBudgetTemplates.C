@@ -80,14 +80,11 @@ Foam::tmp<Foam::volScalarField>
 Foam::functionObjects::tkeBudget::Ck() const
 {
   const volVectorField& U = obr_.lookupObject<volVectorField>("U");
-  //const volVectorField& UMean = obr_.lookupObject<volVectorField>("UMean");
-  //const volVectorField UPrime = U - UMean;
 
   // trace of Reynolds stress tensor
   const volSymmTensorField& UP2M = obr_.lookupObject<volSymmTensorField>("UPrime2Mean");
 
   // inner product of uprime
-  //const volScalarField ipUPrime( UPrime & UPrime );
   const volScalarField ipUPrime( tr(UP2M) );
   
   // gradient of tIPUPrime
