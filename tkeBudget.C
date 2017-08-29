@@ -151,7 +151,7 @@ bool Foam::functionObjects::tkeBudget::execute()
 	      }
 	    case ifTk:
 	      {
-		processField<scalar>(f, Dk());
+		processField<scalar>(f, Tk());
 		break;
 	      }
 	    case ifDk:
